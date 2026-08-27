@@ -58,8 +58,8 @@ the QoS decision:
 
 ```
 Classify (from temperature and humidity):
-    temperature >= 38 C         -> DANGER
-    temperature >= 30 C  OR  humidity >= 80%   -> WARNING
+    temperature >= 38°C        -> DANGER
+    temperature >= 30°C  OR  humidity >= 80%   -> WARNING
     otherwise                  -> SAFE
 ```
 

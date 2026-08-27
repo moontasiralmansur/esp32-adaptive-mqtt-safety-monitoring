@@ -82,8 +82,8 @@ Both sketches require the ESP32 board support (Arduino core).
 
 env-node reads the DHT11 (temperature, humidity) and the LDR (light) every two seconds, classifies the environment, and publishes every five seconds. The status classification:
 
-- `temperature >= 38` C → DANGER
-- `temperature >= 30` C OR `humidity >= 80` % → WARNING
+- `temperature >= 38°C` → DANGER
+- `temperature >= 30°C` OR `humidity >= 80%` → WARNING
 - otherwise → SAFE
 
 The status and the selected QoS are shown on the OLED and included in the MQTT payload.
