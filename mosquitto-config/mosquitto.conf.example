@@ -1,0 +1,39 @@
+# mosquitto.conf.example
+# =====================================================================
+# Minimal Mosquitto configuration for the Adaptive MQTT Safety
+# Monitoring project.
+#
+# This configuration enables anonymous, unencrypted access for
+# local-only operation. Do NOT expose this broker to an untrusted
+# network.
+#
+# The implemented project does NOT use authentication, TLS,
+# persistence, or bridges. Those features are intentionally absent.
+#
+# Reference implementation (source of truth):
+#   - firmware/env-node/env-node.ino
+#   - firmware/sec-node/sec-node.ino
+
+# ---------------------------------------------------------------------
+# Network
+# ---------------------------------------------------------------------
+
+# Name of this broker instance (informational).
+# listener <port> [<bind address>]
+#
+# Replace 0.0.0.0 with your broker interface IP if you want Mosquitto to
+# listen on a specific interface.
+listener 1883 0.0.0.0
+
+# No accounts, tokens, or passwords are configured anywhere in this
+# project. Anonymous connections are required for the ESP32
+# publish-only clients to connect.
+allow_anonymous true
+
+# ---------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------
+
+# Log to the console for visibility during operation.
+log_dest stdout
+log_type all

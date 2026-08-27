@@ -1,0 +1,35 @@
+# Arduino build artifacts
+build/
+
+# PlatformIO build artifacts
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Binaries
+*.bin
+*.elf
+*.hex
+*.o
+*.obj
+
+# IDE metadata
+.vscode/
+.idea/
+*.swp
+
+# Temporary files
+*.tmp
+*.bak
+*~
+~$*
+
+# Python bytecode / virtual environments
+__pycache__/
+.venv/
+
+# Local / private configuration
+mosquitto-config/adaptive-mqtt-safety-monitoring.conf
+
+# Logs
+*.log
