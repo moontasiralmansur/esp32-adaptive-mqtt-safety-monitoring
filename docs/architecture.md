@@ -78,12 +78,13 @@ gateway/hotspot host and the MQTT broker.
 
 | Role                    | Address                       |
 | ----------------------- | ----------------------------- |
-| Local hotspot host      | 192.168.137.1                 |
-| MQTT broker             | mqtt://192.168.137.1:1883     |
+| Local hotspot host      | laptop hotspot IP (e.g. 192.168.137.1) |
+| MQTT broker             | configured to listen on all interfaces (0.0.0.0) |
 | Wi-Fi network          | local hotspot provided by the laptop (SSID and password are not part of this repository) |
 
-The ESP32 nodes connect to the laptop hotspot and publish to the broker at
-`192.168.137.1:1883` (native ESP-IDF `mqtt_client`).
+The ESP32 nodes connect to the laptop hotspot and publish to the broker.
+The broker address in the firmware is a placeholder (`0.0.0.0`) that must
+be replaced with the actual broker IP before uploading.
 
 No external server or Internet connectivity is required. No TLS, credentials,
 or device authentication is used.
@@ -95,18 +96,18 @@ or device authentication is used.
         Windows (Wi-Fi hotspot)
                  |
                  v
-          Mosquitto MQTT broker
-          192.168.137.1:1883
+           Mosquitto MQTT broker
+           (listens on all interfaces)
                  |
-          +------+---------+
-          |                |
-          v                v
-     env-node          sec-node
-     ESP32-S3           ESP32
-          |                |
-    DHT11 + LDR       PIR + Relay (active-LOW)
-          |
-        OLED (SSD1306)
+           +------+---------+
+           |                |
+           v                v
+      env-node          sec-node
+      ESP32-S3           ESP32
+           |                |
+     DHT11 + LDR       PIR + Relay (active-LOW)
+           |
+         OLED (SSD1306)
 ```
 
 Data flow over the broker:

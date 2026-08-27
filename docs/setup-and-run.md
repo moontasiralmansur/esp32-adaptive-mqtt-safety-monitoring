@@ -143,7 +143,7 @@ This starts Mosquitto using the **project configuration**, not the default
 configuration installed under Program Files. `-v` enables verbose logging;
 `-c` points to the project's local configuration file. Keep this terminal
 window open while testing the ESP32 nodes. With verbose logging you should
-see the broker bind to `192.168.137.1:1883`.
+see the broker bind to the configured address (0.0.0.0 by default).
 
 ## 9. Verify Port 1883
 
@@ -173,10 +173,11 @@ If port 1883 is already occupied, likely by the Mosquitto Windows service:
 ## 10. Start the MQTT Subscriber
 
 Open a new PowerShell window and subscribe to all project topics. The broker
-must already be running (section 8):
+must already be running (section 8). Replace `<broker-ip>` with your
+Mosquitto broker address:
 
 ```powershell
-mosquitto_sub -h 192.168.137.1 -p 1883 -t "safety/#" -v
+mosquitto_sub -h <broker-ip> -p 1883 -t "safety/#" -v
 ```
 
 This window displays every message published by the two nodes
@@ -301,10 +302,10 @@ complete decision rules are in [Adaptive QoS](adaptive-qos.md).
   the laptop hotspot is active before upload. Confirm the hotspot SSID and
   the current band are supported.
 - **MQTT connection refused**: verify Mosquitto is running and listening on
-  `192.168.137.1:1883` (sections 8 and 9). Verify the ESP32 IP can reach the
-  broker on that address.
+  the expected address (sections 8 and 9). Verify the ESP32 IP can reach the
+  broker.
 - **Mosquitto only listening on 127.0.0.1**: the local project configuration
-  binds to `192.168.137.1`. If you started Mosquitto without
+  binds to 0.0.0.0 (all interfaces). If you started Mosquitto without
   `-c adaptive-mqtt-safety-monitoring.conf` it falls back to the default
   localhost-only listener. Check the config path and the bind line.
 - **Port 1883 already in use**: another process (often the Mosquitto Windows

@@ -4,12 +4,12 @@
 #define PIR_PIN 27
 #define RELAY_PIN 33
 
-// Replace with your Wi-Fi SSID
+// Wi-Fi credentials - replace with your own values before uploading
 const char* WIFI_SSID = "YOUR_WIFI_SSID";
-// Replace with your Wi-Fi password
 const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 
-// Replace with your MQTT broker IP
+// MQTT broker address - replace 0.0.0.0 with your broker's actual IP address
+// This is a client destination address, not a server bind address
 const char* MQTT_BROKER = "mqtt://0.0.0.0:1883";
 
 const char* DEVICE_ID = "sec-node";

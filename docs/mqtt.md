@@ -7,7 +7,7 @@ node publishes to the local Mosquitto broker; the traffic can be observed
 either through the `mosquitto_sub` command-line subscriber or the optional
 Streamlit dashboard (see [Setup and Run](setup-and-run.md)).
 
-- Broker: Mosquitto running on the laptop at `192.168.137.1:1883` (see
+- Broker: Mosquitto running on the laptop (see
   [Setup and Run](setup-and-run.md) for broker setup).
 - Both ESP32 nodes are **publish-only** clients. They never subscribe to any
   topic; the subscriber only observes the telemetry.
@@ -103,22 +103,23 @@ If a command is not found, call it by absolute path, for example:
 & "C:\Program Files\mosquitto\mosquitto_sub.exe" -h
 ```
 
-Subscribe to all project topics (verbose flag prepends the topic name):
+Subscribe to all project topics (verbose flag prepends the topic name).
+Replace `<broker-ip>` with your Mosquitto broker address:
 
 ```powershell
-mosquitto_sub -h 192.168.137.1 -p 1883 -t "safety/#" -v
+mosquitto_sub -h <broker-ip> -p 1883 -t "safety/#" -v
 ```
 
 Subscribe to one node's topics:
 
 ```powershell
-mosquitto_sub -h 192.168.137.1 -p 1883 -t "safety/env/#" -v
-mosquitto_sub -h 192.168.137.1 -p 1883 -t "safety/security/#" -v
+mosquitto_sub -h <broker-ip> -p 1883 -t "safety/env/#" -v
+mosquitto_sub -h <broker-ip> -p 1883 -t "safety/security/#" -v
 ```
 
 Send a broker sanity-test message (no node subscribes to it; observe it with
 a separate subscriber on `safety/#`):
 
 ```powershell
-mosquitto_pub -h 192.168.137.1 -p 1883 -t "safety/env/test" -m "hello from laptop"
+mosquitto_pub -h <broker-ip> -p 1883 -t "safety/env/test" -m "hello from laptop"
 ```

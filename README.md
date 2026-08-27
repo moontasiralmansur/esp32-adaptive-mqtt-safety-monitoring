@@ -14,6 +14,15 @@ This repository is intended for educational and archival purposes.
 - **Institution:** University of Liberal Arts Bangladesh (ULAB)
 - **Course:** CSE4418 (Internet of Things Lab)
 
+## Configuration Placeholders
+
+This repository uses placeholder values for private configuration:
+
+- **Wi-Fi credentials**: `YOUR_WIFI_SSID` and `YOUR_WIFI_PASSWORD` in the firmware files must be replaced with your actual Wi-Fi network credentials before uploading.
+- **MQTT broker address**: `0.0.0.0` in the firmware and dashboard files is a placeholder that must be replaced with your actual broker IP address. The Mosquitto configuration uses `0.0.0.0` as a server bind address (meaning it listens on all interfaces), which is different from the client destination address used in the firmware and dashboard.
+
+Real Wi-Fi credentials and machine-specific broker IP addresses have been intentionally removed from this public repository for security and privacy reasons.
+
 ## Project Overview
 
 The system monitors environmental conditions and physical security in a room or laboratory using two ESP32 nodes working alongside a Windows laptop as host:
@@ -21,7 +30,7 @@ The system monitors environmental conditions and physical security in a room or 
 - **env-node** (ESP32-S3): measures temperature, humidity, and light with a DHT11 and an analog LDR, and shows live values on an SSD1306 OLED.
 - **sec-node** (ESP32 DevKit): detects motion with a PIR sensor and drives a relay module as an alarm output.
 
-Both nodes are publish-only MQTT clients. They publish telemetry to a Mosquitto broker at `192.168.137.1:1883`. Because the laptop provides the Wi-Fi hotspot and hosts the broker, the complete system runs locally and offline without Internet access. An optional Streamlit dashboard is included for observing live MQTT telemetry in a browser.
+Both nodes are publish-only MQTT clients. They publish telemetry to a local Mosquitto broker. The broker address in the firmware (`0.0.0.0`) is a placeholder that must be replaced with the actual broker IP before uploading. Because the laptop provides the Wi-Fi hotspot and hosts the broker, the complete system runs locally and offline without Internet access. An optional Streamlit dashboard is included for observing live MQTT telemetry in a browser.
 
 ## System Architecture
 
@@ -30,7 +39,7 @@ The system is a client–broker topology: the two nodes communicate only through
 ```
 Laptop
 ├── Wi-Fi hotspot
-├── Mosquitto MQTT broker (192.168.137.1:1883)
+├── Mosquitto MQTT broker
 └── MQTT subscriber (mosquitto_sub)
 
 env-node  -----------> Mosquitto -----------> MQTT subscriber
@@ -85,7 +94,7 @@ sec-node polls the PIR every loop iteration. When motion is detected, the active
 
 ## MQTT Communication
 
-Both nodes publish to the local Mosquitto broker at `192.168.137.1:1883`:
+Both nodes publish to the local Mosquitto broker:
 
 | Topic | Publisher | Purpose | QoS |
 | ----- | --------- | ------- | --- |
@@ -110,7 +119,7 @@ The complete rules are documented in [Adaptive QoS](docs/adaptive-qos.md).
 
 ## Network Architecture
 
-The laptop hosts everything: the Wi-Fi hotspot, the Mosquitto broker (bound to `192.168.137.1:1883`), and the MQTT subscriber. The system therefore runs entirely on a closed local network without Internet access; no cloud service is involved.
+The laptop hosts everything: the Wi-Fi hotspot, the Mosquitto broker (configured to listen on all interfaces), and the MQTT subscriber. The system therefore runs entirely on a closed local network without Internet access; no cloud service is involved.
 
 ## Telemetry / JSON Data
 
@@ -155,7 +164,7 @@ Copy the template to a local `mosquitto-config/adaptive-mqtt-safety-monitoring.c
 
 1. Create the laptop Wi-Fi hotspot and configure the broker (see [Setup and Run](docs/setup-and-run.md)).
 2. Replace the `YOUR_WIFI_SSID` / `YOUR_WIFI_PASSWORD` placeholders in both sketches, then upload `firmware/env-node/env-node.ino` to the ESP32-S3 and `firmware/sec-node/sec-node.ino` to the ESP32 DevKit.
-3. Start the subscriber: `mosquitto_sub -h 192.168.137.1 -p 1883 -t "safety/#" -v`. Alternatively, run the optional Streamlit dashboard for a browser-based view (see [Setup and Run](docs/setup-and-run.md)).
+3. Start the subscriber: `mosquitto_sub -h <broker-ip> -p 1883 -t "safety/#" -v` (replace `<broker-ip>` with your Mosquitto broker address). Alternatively, run the optional Streamlit dashboard for a browser-based view (see [Setup and Run](docs/setup-and-run.md)).
 4. Observe the telemetry; trigger environmental/security events and watch the `qos` field change.
 
 ## Project Structure

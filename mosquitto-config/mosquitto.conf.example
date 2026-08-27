@@ -18,11 +18,11 @@
 # Network
 # ---------------------------------------------------------------------
 
-# Name of this broker instance (informational).
+# Server bind/listen address for the Mosquitto broker.
+# 0.0.0.0 means Mosquitto listens on all available network interfaces.
+# Replace with a specific interface IP if you want to restrict access.
+# This is a server address, not a client destination address.
 # listener <port> [<bind address>]
-#
-# Replace 0.0.0.0 with your broker interface IP if you want Mosquitto to
-# listen on a specific interface.
 listener 1883 0.0.0.0
 
 # No accounts, tokens, or passwords are configured anywhere in this

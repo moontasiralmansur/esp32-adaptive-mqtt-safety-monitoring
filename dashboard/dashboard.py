@@ -5,7 +5,8 @@ import time
 import paho.mqtt.client as mqtt
 import streamlit as st
 
-# Replace with your MQTT broker IP address
+# MQTT broker address - replace 0.0.0.0 with your broker's actual IP address
+# Use 127.0.0.1 if the dashboard and Mosquitto broker run on the same machine
 MQTT_BROKER_HOST = "0.0.0.0"
 MQTT_BROKER_PORT = 1883
 
